@@ -9,6 +9,7 @@ export default function ({width, height, ...rest}) {
   let sidebarWidth = 300;
   let contentWidth = width - toolbarWidth - sidebarWidth;
 
+
   return (
     <div style={{display: "flex", flexFlow: "row nowrap", height}}>
       <Toolbar width={0} height={height} {...rest} />
@@ -17,3 +18,4 @@ export default function ({width, height, ...rest}) {
     </div>
   );
 }
+
