@@ -24,6 +24,8 @@ export default {
   "Pan": "Pan",
   "Undo (CTRL-Z)": "Undo (CTRL-Z)",
   "Configure project": "Configure project",
+  "Present mode": "Present mode",
+  "Edit mode": "Edit mode",
   "Open catalog": "Open catalog",
   "Reset": "Reset",
   "Unselect": "Unselect",

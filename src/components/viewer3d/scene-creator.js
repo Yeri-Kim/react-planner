@@ -313,6 +313,8 @@ function addHole(sceneData, planData, layer, holeID, catalog, holesActions) {
     let pivot = new Three.Object3D();
     pivot.add(object);
 
+    pivot.name = holeData.type;
+
     let line = layer.lines.get(holeData.line);
 
     // First of all I need to find the vertices of this line
@@ -347,6 +349,7 @@ function addHole(sceneData, planData, layer, holeID, catalog, holesActions) {
     planData.plan.add(pivot);
     planData.sceneGraph.layers[layer.id].holes[holeData.id] = pivot;
 
+    applyType(pivot, holeData.type);
     applyInteract(pivot, () => {
       return holesActions.selectHole(layer.id, holeData.id)
     });
@@ -376,6 +379,8 @@ function addLine(sceneData, planData, layer, lineID, catalog, linesActions) {
     let pivot = new Three.Object3D();
     pivot.add(line3D);
 
+    pivot.name = line.type;
+
     pivot.position.x = vertex0.x;
     pivot.position.y = layer.altitude;
     pivot.position.z = -vertex0.y;
@@ -383,6 +388,7 @@ function addLine(sceneData, planData, layer, lineID, catalog, linesActions) {
     planData.plan.add(pivot);
     planData.sceneGraph.layers[layer.id].lines[lineID] = pivot;
 
+    applyType(pivot, line.type);
     applyInteract(pivot, () => {
       return linesActions.selectLine(layer.id, line.id);
     });
@@ -403,10 +409,12 @@ function addArea(sceneData, planData, layer, areaID, catalog, areaActions) {
   return catalog.getElement(area.type).render3D(area, layer, sceneData).then(area3D => {
     let pivot = new Three.Object3D();
     pivot.add(area3D);
+
     pivot.position.y = layer.altitude;
     planData.plan.add(pivot);
     planData.sceneGraph.layers[layer.id].areas[area.id] = pivot;
 
+    applyType(pivot, area.type);
     applyInteract(pivot, interactFunction);
 
     if (!area.selected && layer.opacity !== 1) {
@@ -429,6 +437,7 @@ function addItem(sceneData, planData, layer, itemID, catalog, itemsActions) {
     pivot.position.y = layer.altitude;
     pivot.position.z = -item.y;
 
+    applyType(item3D, item.type);
     applyInteract(item3D, () => {
         itemsActions.selectItem(layer.id, item.id);
       }
@@ -449,6 +458,15 @@ function applyInteract(object, interactFunction) {
   object.traverse(function (child) {
     if (child instanceof Three.Mesh) {
       child.interact = interactFunction;
+    }
+  });
+}
+
+// Name to children of an Object3D
+function applyType(object, type) {
+  object.traverse(function (child) {
+    if (child instanceof Three.Mesh) {
+      child.type = type;
     }
   });
 }

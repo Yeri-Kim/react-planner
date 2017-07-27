@@ -25,6 +25,7 @@ export var UPDATE_2D_CAMERA = 'UPDATE_2D_CAMERA';
 //ACTIONS viewer3D
 export var SELECT_TOOL_3D_VIEW = 'SELECT_TOOL_3D_VIEW';
 export var SELECT_TOOL_3D_FIRST_PERSON = 'SELECT_TOOL_3D_FIRST_PERSON';
+export var SELECT_TOOL_3D_PRESENT = 'SELECT_TOOL_3D_PRESENT';
 
 //ACTIONS items
 export var SELECT_TOOL_DRAWING_ITEM = 'SELECT_TOOL_DRAWING_ITEM';
@@ -41,6 +42,7 @@ export var END_ROTATING_ITEM = 'END_ROTATING_ITEM';
 export var SELECT_HOLE = 'SELECT_HOLE';
 export var SELECT_AREA = 'SELECT_AREA';
 export var SELECT_ITEM = 'SELECT_ITEM';
+export var SELECT_ITEM_FROM_PRESENT = 'SELECT_ITEM_FROM_PRESENT';
 export var SELECT_LINE = 'SELECT_LINE';
 export var SELECT_TOOL_DRAWING_LINE = 'SELECT_TOOL_DRAWING_LINE';
 export var BEGIN_DRAWING_LINE = 'BEGIN_DRAWING_LINE';
@@ -73,6 +75,8 @@ export var SELECT_LAYER = 'SELECT_LAYER';
 export var OPEN_LAYER_CONFIGURATOR = 'OPEN_LAYER_CONFIGURATOR';
 export var REMOVE_LAYER = 'REMOVE_LAYER';
 
+//ACTIONS view
+
 //GROUPING ACTIONS
 export var PROJECT_ACTIONS = {
   NEW_PROJECT: NEW_PROJECT,
@@ -102,11 +106,13 @@ export var VIEWER2D_ACTIONS = {
 
 export var VIEWER3D_ACTIONS = {
   SELECT_TOOL_3D_VIEW: SELECT_TOOL_3D_VIEW,
-  SELECT_TOOL_3D_FIRST_PERSON: SELECT_TOOL_3D_FIRST_PERSON
+  SELECT_TOOL_3D_FIRST_PERSON: SELECT_TOOL_3D_FIRST_PERSON,
+  SELECT_TOOL_3D_PRESENT: SELECT_TOOL_3D_PRESENT
 };
 
 export var ITEMS_ACTIONS = {
   SELECT_ITEM: SELECT_ITEM,
+  SELECT_ITEM_FROM_PRESENT: SELECT_ITEM_FROM_PRESENT,
   SELECT_TOOL_DRAWING_ITEM: SELECT_TOOL_DRAWING_ITEM,
   UPDATE_DRAWING_ITEM: UPDATE_DRAWING_ITEM,
   END_DRAWING_ITEM: END_DRAWING_ITEM,
@@ -178,6 +184,8 @@ export var MODE_FITTING_IMAGE = 'MODE_FITTING_IMAGE';
 export var MODE_VIEWING_CATALOG = 'MODE_VIEWING_CATALOG';
 export var MODE_CONFIGURING_PROJECT = 'MODE_CONFIGURING_PROJECT';
 export var MODE_CONFIGURING_LAYER = 'MODE_CONFIGURING_LAYER';
+export var MODE_PRESENT = 'MODE_PRESENT';
+export var MODE_EDIT = 'MODE_EDIT';
 
 //UNITS
 export var UNIT_MILLIMETER = 'mm';
@@ -190,3 +198,23 @@ export var UNIT_MILE = 'mi';
 export var UNITS_LENGTH = [UNIT_MILLIMETER, UNIT_CENTIMETER, UNIT_METER, UNIT_INCH, UNIT_FOOT, UNIT_MILE];
 
 export var EPSILON = 1e-6;
+
+export var SENSOR_LIST = {
+  'rk8_zCxg-': { name: '센서1', location: '유기농 코너1' },
+  'SJq0XCel-': { name: '센서2', location: '유기농 코너2' },
+  'r1XFGAxxb': { name: '센서3', location: '유아식 코너1' },
+  'r13RXCxgW': { name: '센서4', location: '유아식 코너2' },
+  'rk5xQRleZ': { name: '센서5', location: '야채 상부장' },
+  'ryCC7Cllb': { name: '센서6', location: '야채 하부장' },
+  'r1XWQ0xgb': { name: '센서7', location: '야채 코너1' },
+  'BJW1ERlgZ': { name: '센서8', location: '야채 코너2' },
+  'SJkOJ2xg-': { name: '센서9', location: '입구1' },
+  'rJmJNRxe-': { name: '센서10', location: '입구2' },
+  'rkIr7RxxW': { name: '센서11', location: '입구3' },
+  'SyU1VCle-': { name: '센서12', location: '식품 보관소 내부' },
+  'BytS70xe-': { name: '센서13', location: '건강식품1' },
+  'ryauMRgxb': { name: '센서14', location: '건강식품2' },
+  'B1TyV0llZ': { name: '센서15', location: '건강식품3' },
+  'ryqdzAel-': { name: '센서16', location: '건강식품4' },
+  'S1YJE0lg-': { name: '센서17', location: '건강식품5' }
+};

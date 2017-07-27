@@ -9,7 +9,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import { Record, List, Map, fromJS } from 'immutable';
-import { MODE_IDLE } from './constants';
+import { MODE_IDLE, MODE_PRESENT, MODE_3D_VIEW } from './constants';
 
 var safeLoadMapList = function safeLoadMapList(mapList, Model, defaultMap) {
   return mapList ? new Map(mapList).map(function (m) {
@@ -388,7 +388,9 @@ export var State = function (_Record12) {
 
   return State;
 }(Record({
-  mode: MODE_IDLE,
+  // mode: MODE_IDLE,
+  mode: MODE_PRESENT,
+  // mode: MODE_3D_VIEW,
 
   scene: new Scene(),
   sceneHistory: new List([new Scene()]),

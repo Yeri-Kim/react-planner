@@ -1,6 +1,6 @@
 import { List, Map } from 'immutable';
 
-import { SELECT_TOOL_DRAWING_ITEM, UPDATE_DRAWING_ITEM, END_DRAWING_ITEM, BEGIN_DRAGGING_ITEM, UPDATE_DRAGGING_ITEM, END_DRAGGING_ITEM, BEGIN_ROTATING_ITEM, UPDATE_ROTATING_ITEM, END_ROTATING_ITEM, SELECT_ITEM, MODE_IDLE, MODE_DRAWING_ITEM, MODE_DRAGGING_ITEM, MODE_ROTATING_ITEM } from '../constants';
+import { SELECT_TOOL_DRAWING_ITEM, UPDATE_DRAWING_ITEM, END_DRAWING_ITEM, BEGIN_DRAGGING_ITEM, UPDATE_DRAGGING_ITEM, END_DRAGGING_ITEM, BEGIN_ROTATING_ITEM, UPDATE_ROTATING_ITEM, END_ROTATING_ITEM, SELECT_ITEM, SELECT_ITEM_FROM_PRESENT, SENSOR_LIST, MODE_IDLE, MODE_DRAWING_ITEM, MODE_DRAGGING_ITEM, MODE_ROTATING_ITEM } from '../constants';
 
 import { addItem, removeItem, unselect, select, unselectAll } from '../utils/layer-operations';
 import * as Geometry from '../utils/geometry';
@@ -9,6 +9,9 @@ export default function (state, action) {
   switch (action.type) {
     case SELECT_ITEM:
       return selectItem(state, action.layerID, action.itemID);
+
+    case SELECT_ITEM_FROM_PRESENT:
+      return selectItemFromPresent(state, action.layerID, action.itemID);
 
     case SELECT_TOOL_DRAWING_ITEM:
       return selectToolDrawingItem(state, action.sceneComponentType);
@@ -196,6 +199,34 @@ function endRotatingItem(state, x, y) {
 }
 
 function selectItem(state, layerID, itemID) {
+  var scene = state.scene;
+
+  scene = scene.merge({
+    layers: scene.layers.map(unselectAll),
+    selectedLayer: layerID
+  });
+
+  scene = scene.updateIn(['layers', layerID], function (layer) {
+    return layer.withMutations(function (layer) {
+      var item = layer.getIn(['items', itemID]);
+      select(layer, 'items', itemID);
+    });
+  });
+
+  return state.merge({
+    scene: scene,
+    sceneHistory: state.sceneHistory.push(scene)
+  });
+}
+
+function selectItemFromPresent(state, layerID, itemID) {
+  var sensorInfo = SENSOR_LIST[itemID];
+
+  var event = new CustomEvent('sensor', { 'detail': sensorInfo });
+  window.dispatchEvent(event);
+
+  // if (!sensorInfo) return;
+
   var scene = state.scene;
 
   scene = scene.merge({

@@ -8,6 +8,8 @@ import Icon3DFirstPerson from 'react-icons/lib/md/directions-run';
 import IconCatalog from 'react-icons/lib/fa/plus';
 import IconUndo from 'react-icons/lib/md/undo'
 import IconConfigure from 'react-icons/lib/md/settings'
+import IconConView from 'react-icons/lib/fa/eye'
+import IconConEdit from 'react-icons/lib/fa/edit'
 import ToolbarSaveButton from './toolbar-save-button';
 import ToolbarLoadButton from './toolbar-load-button';
 
@@ -42,13 +44,16 @@ import {
   MODE_FITTING_IMAGE,
   MODE_UPLOADING_IMAGE,
   MODE_VIEWING_CATALOG,
-  MODE_CONFIGURING_PROJECT
+  MODE_CONFIGURING_PROJECT,
+  MODE_PRESENT,
+  MODE_EDIT
 } from '../../constants';
 
 import ToolbarButton from './toolbar-button';
 const STYLE = {
-  backgroundColor: '#28292D',
-  padding: "10px"
+  display: 'none'
+  // backgroundColor: '#28292D',
+  // padding: "10px"
 };
 
 export default function Toolbar({state, width, height, toolbarButtons, allowProjectFileSupport}, {
@@ -59,6 +64,7 @@ export default function Toolbar({state, width, height, toolbarButtons, allowProj
                                   linesActions,
                                   holesActions,
                                   itemsActions,
+                                  viewActions,
                                   translator,
                                 }) {
 
@@ -132,6 +138,21 @@ export default function Toolbar({state, width, height, toolbarButtons, allowProj
                      onClick={event => projectActions.openProjectConfigurator()}>
         <IconConfigure />
       </ToolbarButton>
+
+      <If condition={![MODE_PRESENT].includes(mode)}>
+        <ToolbarButton active={[MODE_EDIT].includes(mode)} tooltip={translator.t("Edit mode")}
+                       onClick={() => {}}>
+          <IconConEdit />
+        </ToolbarButton>
+      </If>
+
+      <If condition={![MODE_EDIT].includes(mode)}>
+        <ToolbarButton active={[MODE_PRESENT].includes(mode)} tooltip={translator.t("Present mode")}
+                       onClick={event => viewer3DActions.selectTool3DPresent()}>
+          <IconConView />
+        </ToolbarButton>
+      </If>
+
       {toolbarButtons.map((Component, index) => <Component mode={mode} key={index}/>)}
     </aside>
   )
@@ -153,5 +174,6 @@ Toolbar.contextTypes = {
   linesActions: PropTypes.object.isRequired,
   holesActions: PropTypes.object.isRequired,
   itemsActions: PropTypes.object.isRequired,
+  presentActions: PropTypes.object.isRequired,
   translator: PropTypes.object.isRequired,
 };

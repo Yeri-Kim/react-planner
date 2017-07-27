@@ -11,9 +11,9 @@ export default function ({width, height, ...rest}) {
 
   return (
     <div style={{display: "flex", flexFlow: "row nowrap", height}}>
-      <Toolbar width={toolbarWidth} height={height} {...rest} />
+      <Toolbar width={0} height={height} {...rest} />
       <Content width={contentWidth} height={height} {...rest} onWheel={event => event.preventDefault()} />
-      <Sidebar width={sidebarWidth} height={height} {...rest} />
+      <Sidebar width={0} height={height} {...rest} />
     </div>
   );
 }

@@ -49,7 +49,7 @@ ReactDOM.render(
     <Provider store={store}>
       <ContainerDimensions>
         {({width, height}) =>
-          <ReactPlanner catalog={MyCatalog} width={width} height={height} plugins={plugins}
+          <ReactPlanner catalog={MyCatalog} width={500} height={450} plugins={plugins}
                         toolbarButtons={toolbarButtons} stateExtractor={state => state.get('react-planner')}
           />
         }

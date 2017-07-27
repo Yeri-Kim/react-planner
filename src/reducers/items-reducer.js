@@ -11,6 +11,8 @@ import {
   UPDATE_ROTATING_ITEM,
   END_ROTATING_ITEM,
   SELECT_ITEM,
+  SELECT_ITEM_FROM_PRESENT,
+  SENSOR_LIST,
 
   MODE_IDLE,
   MODE_DRAWING_ITEM,
@@ -25,6 +27,9 @@ export default function (state, action) {
   switch (action.type) {
     case SELECT_ITEM:
       return selectItem(state, action.layerID, action.itemID);
+
+    case SELECT_ITEM_FROM_PRESENT:
+      return selectItemFromPresent(state, action.layerID, action.itemID);
 
     case SELECT_TOOL_DRAWING_ITEM:
       return selectToolDrawingItem(state, action.sceneComponentType);
@@ -199,6 +204,33 @@ function endRotatingItem(state, x, y) {
 }
 
 function selectItem(state, layerID, itemID) {
+  let scene = state.scene;
+
+  scene = scene.merge({
+    layers: scene.layers.map(unselectAll),
+    selectedLayer: layerID
+  });
+
+  scene = scene.updateIn(['layers', layerID], layer => layer.withMutations(layer => {
+      let item = layer.getIn(['items', itemID]);
+      select(layer, 'items', itemID);
+    })
+  );
+
+  return state.merge({
+    scene,
+    sceneHistory: state.sceneHistory.push(scene)
+  })
+}
+
+function selectItemFromPresent(state, layerID, itemID) {
+  const sensorInfo = SENSOR_LIST[itemID];
+
+  let event = new CustomEvent('sensor', { 'detail': sensorInfo });
+  window.dispatchEvent(event);
+
+  // if (!sensorInfo) return;
+
   let scene = state.scene;
 
   scene = scene.merge({

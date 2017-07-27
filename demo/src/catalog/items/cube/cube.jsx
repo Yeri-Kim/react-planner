@@ -18,7 +18,7 @@ export default {
     color: {
       label: "Color",
       type: "color",
-      defaultValue: "#f48342"
+      defaultValue: "#eb7576"
     },
   },
 
@@ -29,15 +29,16 @@ export default {
       fill: element.properties.get('color')
     };
 
+
     return (
       <g transform="translate(-50, -50)">
-        <rect x="0" y="0" width="100" height="100" style={style}/>
+        <rect x="0" y="0" width="50" height="50" style={style}/>
       </g>
     );
   },
 
   render3D: (element, layer, scene) => {
-    let geometry = new BoxGeometry(100, 100, 100);
+    let geometry = new BoxGeometry(50, 40, 70);
     let material = new MeshBasicMaterial({
       color: element.properties.get('color')
     });
@@ -52,7 +53,7 @@ export default {
       mesh.add(box);
     }
 
-    mesh.position.y = +50;
+    mesh.position.y = +150;
 
     return Promise.resolve(mesh);
   }

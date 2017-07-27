@@ -1,5 +1,6 @@
 import {
   SELECT_ITEM,
+  SELECT_ITEM_FROM_PRESENT,
   SELECT_TOOL_DRAWING_ITEM,
   UPDATE_DRAWING_ITEM,
   END_DRAWING_ITEM,
@@ -14,6 +15,14 @@ import {
 export function selectItem(layerID, itemID) {
   return {
     type: SELECT_ITEM,
+    layerID,
+    itemID
+  }
+}
+
+export function selectItemFromPresent(layerID, itemID) {
+  return {
+    type: SELECT_ITEM_FROM_PRESENT,
     layerID,
     itemID
   }

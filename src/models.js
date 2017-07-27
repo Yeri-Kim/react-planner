@@ -1,5 +1,5 @@
 import {Record, List, Map, fromJS} from 'immutable';
-import {MODE_IDLE} from './constants';
+import {MODE_IDLE, MODE_PRESENT, MODE_3D_VIEW} from './constants';
 
 let safeLoadMapList = (mapList, Model, defaultMap) => {
   return mapList
@@ -270,7 +270,9 @@ export class Catalog extends Record({
 }
 
 export class State extends Record({
-  mode: MODE_IDLE,
+  // mode: MODE_IDLE,
+  mode: MODE_PRESENT,
+  // mode: MODE_3D_VIEW,
 
   scene: new Scene(),
   sceneHistory: new List([new Scene()]),

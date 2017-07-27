@@ -10,6 +10,8 @@ import Icon3DFirstPerson from 'react-icons/lib/md/directions-run';
 import IconCatalog from 'react-icons/lib/fa/plus';
 import IconUndo from 'react-icons/lib/md/undo';
 import IconConfigure from 'react-icons/lib/md/settings';
+import IconConView from 'react-icons/lib/fa/eye';
+import IconConEdit from 'react-icons/lib/fa/edit';
 import ToolbarSaveButton from './toolbar-save-button';
 import ToolbarLoadButton from './toolbar-load-button';
 
@@ -41,12 +43,13 @@ var Icon3D = function Icon3D() {
   );
 };
 
-import { MODE_IDLE, MODE_2D_PAN, MODE_2D_ZOOM_IN, MODE_2D_ZOOM_OUT, MODE_3D_VIEW, MODE_3D_FIRST_PERSON, MODE_WAITING_DRAWING_LINE, MODE_DRAWING_LINE, MODE_DRAWING_HOLE, MODE_DRAWING_ITEM, MODE_FITTING_IMAGE, MODE_UPLOADING_IMAGE, MODE_VIEWING_CATALOG, MODE_CONFIGURING_PROJECT } from '../../constants';
+import { MODE_IDLE, MODE_2D_PAN, MODE_2D_ZOOM_IN, MODE_2D_ZOOM_OUT, MODE_3D_VIEW, MODE_3D_FIRST_PERSON, MODE_WAITING_DRAWING_LINE, MODE_DRAWING_LINE, MODE_DRAWING_HOLE, MODE_DRAWING_ITEM, MODE_FITTING_IMAGE, MODE_UPLOADING_IMAGE, MODE_VIEWING_CATALOG, MODE_CONFIGURING_PROJECT, MODE_PRESENT, MODE_EDIT } from '../../constants';
 
 import ToolbarButton from './toolbar-button';
 var STYLE = {
-  backgroundColor: '#28292D',
-  padding: "10px"
+  display: 'none'
+  // backgroundColor: '#28292D',
+  // padding: "10px"
 };
 
 export default function Toolbar(_ref, _ref2) {
@@ -62,6 +65,7 @@ export default function Toolbar(_ref, _ref2) {
       linesActions = _ref2.linesActions,
       holesActions = _ref2.holesActions,
       itemsActions = _ref2.itemsActions,
+      viewActions = _ref2.viewActions,
       translator = _ref2.translator;
 
 
@@ -170,6 +174,28 @@ export default function Toolbar(_ref, _ref2) {
         } },
       React.createElement(IconConfigure, null)
     ),
+    React.createElement(
+      If,
+      { condition: ![MODE_PRESENT].includes(mode) },
+      React.createElement(
+        ToolbarButton,
+        { active: [MODE_EDIT].includes(mode), tooltip: translator.t("Edit mode"),
+          onClick: function onClick() {} },
+        React.createElement(IconConEdit, null)
+      )
+    ),
+    React.createElement(
+      If,
+      { condition: ![MODE_EDIT].includes(mode) },
+      React.createElement(
+        ToolbarButton,
+        { active: [MODE_PRESENT].includes(mode), tooltip: translator.t("Present mode"),
+          onClick: function onClick(event) {
+            return viewer3DActions.selectTool3DPresent();
+          } },
+        React.createElement(IconConView, null)
+      )
+    ),
     toolbarButtons.map(function (Component, index) {
       return React.createElement(Component, { mode: mode, key: index });
     })
@@ -191,5 +217,6 @@ Toolbar.contextTypes = {
   linesActions: PropTypes.object.isRequired,
   holesActions: PropTypes.object.isRequired,
   itemsActions: PropTypes.object.isRequired,
+  presentActions: PropTypes.object.isRequired,
   translator: PropTypes.object.isRequired
 };

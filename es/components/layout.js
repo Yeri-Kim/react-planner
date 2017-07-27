@@ -19,10 +19,10 @@ export default function (_ref) {
   return React.createElement(
     'div',
     { style: { display: "flex", flexFlow: "row nowrap", height: height } },
-    React.createElement(Toolbar, _extends({ width: toolbarWidth, height: height }, rest)),
+    React.createElement(Toolbar, _extends({ width: 0, height: height }, rest)),
     React.createElement(Content, _extends({ width: contentWidth, height: height }, rest, { onWheel: function onWheel(event) {
         return event.preventDefault();
       } })),
-    React.createElement(Sidebar, _extends({ width: sidebarWidth, height: height }, rest))
+    React.createElement(Sidebar, _extends({ width: 0, height: height }, rest))
   );
 }

@@ -8,6 +8,7 @@ import * as sceneActions from '../actions/scene-actions';
 import * as verticesActions from '../actions/vertices-actions';
 import * as itemsActions from '../actions/items-actions';
 import * as areaActions from '../actions/area-actions';
+import * as presentActions from '../actions/present-actions';
 
 export default {
   projectActions,
@@ -19,5 +20,6 @@ export default {
   sceneActions,
   verticesActions,
   itemsActions,
-  areaActions
+  areaActions,
+  presentActions
 }
